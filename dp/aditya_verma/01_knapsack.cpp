@@ -50,6 +50,26 @@ int _01KnapsackTopDownSolution(vector<int> weights, vector<int> values, int size
     return dp[size-1][capacity] = profitOnLeaving;
 }
 
+int _01KnapsackBottomUpSolution(vector<int> weights, vector<int> values, int size, int capacity) {
+    int dp[size+1][capacity+1];
+
+    for(int i=0; i<size+1; ++i) {
+        for(int j=0; j<capacity+1; ++j) {
+            if(i==0 || j==0) {
+                dp[i][j] = 0;
+            }
+            else if(weights[i-1]<=j) {
+                dp[i][j] = max(values[i-1]+dp[i-1][j-weights[i-1]], dp[i-1][j]);
+            }
+            else {
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+
+    return dp[size][capacity];
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false);	cin.tie(0);
@@ -72,7 +92,8 @@ int main()
     vector<vector<int>> dp(size+1, vector<int>(capacity+1, -1));
     
     // int maximumProfit = _01KnapsackRecursiveSolution(weights, values, size, capacity);
-    int maximumProfit = _01KnapsackTopDownSolution(weights, values, size, capacity, dp);
+    // int maximumProfit = _01KnapsackTopDownSolution(weights, values, size, capacity, dp);
+    int maximumProfit = _01KnapsackBottomUpSolution(weights, values, size, capacity);
     dbg(maximumProfit);
     
     return 0;
