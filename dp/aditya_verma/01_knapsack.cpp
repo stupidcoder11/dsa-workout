@@ -27,7 +27,29 @@ int _01KnapsackRecursiveSolution(vector<int> weights, vector<int> values, int si
     return profitOnLeaving;
 }
 
-//	Driver function
+int _01KnapsackTopDownSolution(vector<int> weights, vector<int> values, int size, int capacity, vector<vector<int>>& dp) {
+
+    // If the knapsack capacity is zero or there are no items present then profit will be zero.
+    if(capacity == 0 || size == 0) {
+        return 0;
+    }
+
+    if(dp[size-1][capacity] != -1) {
+        return dp[size-1][capacity];
+    }
+
+    // Case 1: If an item's weight is within the knapsack capacity, then see whether considering that item will give maximum profit or not
+    if(weights[size-1]<=capacity) {
+        int profitOnTaking = values[size-1] + _01KnapsackRecursiveSolution(weights, values, size-1, capacity-weights[size-1]);
+        int profitOnLeaving = _01KnapsackRecursiveSolution(weights, values, size-1, capacity);
+        return dp[size-1][capacity] = max(profitOnTaking, profitOnLeaving);
+    }
+
+    // Case 2: If an item's weight isn't within the knapsack capacity, leave that item and proceed to next item.
+    int profitOnLeaving = _01KnapsackRecursiveSolution(weights, values, size-1, capacity);
+    return dp[size-1][capacity] = profitOnLeaving;
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false);	cin.tie(0);
@@ -47,7 +69,10 @@ int main()
     int capacity;
     cin >> capacity;
 
-    int maximumProfit = _01KnapsackRecursiveSolution(weights, values, size, capacity);
+    vector<vector<int>> dp(size+1, vector<int>(capacity+1, -1));
+    
+    // int maximumProfit = _01KnapsackRecursiveSolution(weights, values, size, capacity);
+    int maximumProfit = _01KnapsackTopDownSolution(weights, values, size, capacity, dp);
     dbg(maximumProfit);
     
     return 0;
