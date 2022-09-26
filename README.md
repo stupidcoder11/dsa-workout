@@ -12,6 +12,7 @@ A single mono repo for rehearsal of my DSA skills.
     <td>Aditya Verma</td>
     <td>
       <label>01 Knapsack</label><br/>
+      <label>Subset sum</label><br/>
     </td>
   </tr>
 </table>
