@@ -25,6 +25,28 @@ bool isSubsetSumRecursive(int numbers[], int size, int target) {
     return isSubsetSumRecursive(numbers, size-1, target);
 } 
 
+bool isSubsetSumBottomUp(int numbers[], int size, int target, vector<vector<int>>& dp) {
+    if(target==0) {
+        return true;
+    }
+    if(size==0) {
+        return false;
+    }
+
+    if(dp[size-1][target] !=-1) {
+        return dp[size-1][target]==1;
+    }
+
+    if(numbers[size-1]<=target) {
+        bool pick = isSubsetSumBottomUp(numbers, size-1, target-numbers[size-1], dp);
+        bool drop = isSubsetSumBottomUp(numbers, size-1, target, dp);
+        return dp[size-1][target]=pick || drop;
+    }
+
+    return dp[size-1][target]=isSubsetSumBottomUp(numbers, size-1, target, dp);
+} 
+
+
 //	Driver function
 int main()
 {
@@ -40,7 +62,10 @@ int main()
     int targetSum;
     cin >> targetSum;
 
-    string ans = isSubsetSumRecursive(numbers, size, targetSum)?"YES":"NO";
+    vector<vector<int>> dp(size+1, vector<int>(targetSum+1, -1));
+
+    // string ans = isSubsetSumRecursive(numbers, size, targetSum)?"YES":"NO";
+    string ans = isSubsetSumBottomUp(numbers, size, targetSum, dp)?"YES":"NO";
     dbg(ans);
     
     return 0;
