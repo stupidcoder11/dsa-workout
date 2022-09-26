@@ -46,6 +46,30 @@ bool isSubsetSumBottomUp(int numbers[], int size, int target, vector<vector<int>
     return dp[size-1][target]=isSubsetSumBottomUp(numbers, size-1, target, dp);
 } 
 
+bool isSubsetSumTopDown(int numbers[], int size, int target) {
+    int dp[size+1][target+1];
+    memset(dp, -1, sizeof(dp));
+
+    for(int j=0; j<target+1; ++j) {
+        dp[0][j]=0;
+    }
+    for(int i=0; i<size+1; ++i) {
+        dp[i][0]=1;
+    }
+
+    for(int i=1; i<size+1; ++i) {
+        for(int j=1; j<target+1; ++j) {
+            if(numbers[i-1]<=j) {
+                dp[i][j]=dp[i-1][j-numbers[i-1]]||dp[i-1][j];
+            }
+            else{
+                dp[i][j]=dp[i-1][j];
+            }
+        }
+    }
+
+    return dp[size][target];
+} 
 
 //	Driver function
 int main()
@@ -65,7 +89,8 @@ int main()
     vector<vector<int>> dp(size+1, vector<int>(targetSum+1, -1));
 
     // string ans = isSubsetSumRecursive(numbers, size, targetSum)?"YES":"NO";
-    string ans = isSubsetSumBottomUp(numbers, size, targetSum, dp)?"YES":"NO";
+    // string ans = isSubsetSumBottomUp(numbers, size, targetSum, dp)?"YES":"NO";
+    string ans = isSubsetSumTopDown(numbers, size, targetSum)?"YES":"NO";
     dbg(ans);
     
     return 0;
