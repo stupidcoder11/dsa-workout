@@ -11,10 +11,12 @@ A single mono repo for rehearsal of my DSA skills.
   <tr>
     <td>Aditya Verma</td>
     <td>
-      <label>01 Knapsack</label><br/>
-      <label>Subset sum</label><br/>
-      <label>Equal sum partition</label><br/>
-      <label>Minimum sum difference partition</label><br/>
+      <ol>
+        <li>01 Knapsack</li>
+        <li>Subset sum</li>
+        <li>Equal sum partition</li>
+        <li>Minimum sum difference partition</li>
+      </ol>
     </td>
   </tr>
 </table>
