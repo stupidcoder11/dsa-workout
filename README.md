@@ -13,6 +13,8 @@ A single mono repo for rehearsal of my DSA skills.
     <td>
       <label>01 Knapsack</label><br/>
       <label>Subset sum</label><br/>
+      <label>Equal sum partition</label><br/>
+      <label>Minimum sum difference partition</label><br/>
     </td>
   </tr>
 </table>
